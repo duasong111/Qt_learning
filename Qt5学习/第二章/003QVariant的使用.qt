@@ -1,0 +1,46 @@
+#include "widget.h"
+#include "ui_widget.h"
+
+#include <QDebug>
+Widget::Widget(QWidget *parent)
+    : QWidget(parent)
+    , ui(new Ui::Widget)
+{
+    ui->setupUi(this);
+//    QVariant v(400);
+//    qDebug()<<v.toInt(); //变量u的输出
+//    QVariant w("你好啊");
+//    qDebug()<<w.toString();
+
+//    QMap<QString,QVariant> map;
+//    map["int"]= 709;
+//    map["double"]= 20.32;
+//    map["string"]="how are you";
+//    map["color"]=QColor(255,0,0);
+//    //前边的是将他们的类型也输出
+//    //QVariant(int, 709) 709
+//    qDebug()<<map["int"]<<map["int"].toInt();
+//    qDebug()<<map["double"]<<map["double"].toDouble();
+//    qDebug()<<map["string"]<<map["string"].toString();
+//    qDebug()<<map["string"].toString();
+//    qDebug()<<map["color"]<<map["color"].value<QColor>();
+
+//   QStringList  sl;
+//   sl<<"AAAABBB"<<"GGGGG"<<"FFFF";
+//   qDebug()<<sl;  //字符串输出
+
+
+    //下面是关于一些算法的
+    double a=-21.3,b=90;
+    double c = qAbs(a); //绝对值
+    double max =qMax(a,b); //最大值
+  qDebug()<<c;
+   qDebug()<<max;
+
+}
+
+Widget::~Widget()
+{
+    delete ui;
+}
+
