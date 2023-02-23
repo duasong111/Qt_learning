@@ -1,0 +1,29 @@
+#ifndef PAGE_LOG_H
+#define PAGE_LOG_H
+
+#include <QWidget>
+
+namespace Ui {
+class page_Log;
+}
+
+class page_Log : public QWidget
+{
+    Q_OBJECT
+
+public:
+    explicit page_Log(QWidget *parent = nullptr);
+    ~page_Log();
+
+private slots:
+    void on_btn_log_clicked(); //登录点击
+
+    void on_pushButton_2_clicked();//退出点击
+signals:
+    void sendLoginSuccess(); //发送一个信号----来自于登录
+private:
+    Ui::page_Log *ui;
+
+};
+
+#endif // PAGE_LOG_H
