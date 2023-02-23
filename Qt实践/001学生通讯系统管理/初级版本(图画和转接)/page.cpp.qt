@@ -1,0 +1,30 @@
+#include "page_log.h"
+#include "ui_page_log.h"
+
+page_Log::page_Log(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::page_Log)
+{
+    ui->setupUi(this);
+}
+
+page_Log::~page_Log()
+{
+    delete ui;
+}
+
+void page_Log::on_btn_log_clicked()
+{ //这个是登录页面
+
+    //失败就提示
+
+    //成功就发一个消息
+    emit sendLoginSuccess(); //发送一个信号
+}
+
+void page_Log::on_pushButton_2_clicked() //这个是退出
+{
+    exit(0);
+}
+
+//上边其实还有那个main.cpp其实你只要把那个w.show（）注释掉就行，这里不再打main的文件
