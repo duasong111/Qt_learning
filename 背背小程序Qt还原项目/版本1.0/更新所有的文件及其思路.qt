@@ -1,0 +1,252 @@
+//目前是分支是四个板块
+头文件分别是 firs.h log_denglu.h  me.h widget.h
+#ifndef FIRST_H
+#define FIRST_H
+
+#include <QWidget>
+
+namespace Ui {
+class First;
+}
+
+class First : public QWidget
+{
+    Q_OBJECT
+
+public:
+    explicit First(QWidget *parent = nullptr);
+    ~First();
+
+//private slots:
+//    void
+signals:
+    void first_page();
+private:
+    Ui::First *ui;
+
+};
+
+#endif // FIRST_H
+
+
+#ifndef LOG_DENGLU_H
+#define LOG_DENGLU_H
+
+#include <QWidget>
+
+namespace Ui {
+class Log_denglu;
+}
+
+class Log_denglu : public QWidget
+{
+    Q_OBJECT
+
+public:
+    explicit Log_denglu(QWidget *parent = nullptr);
+    ~Log_denglu();
+ //这个是登录页面
+private slots:
+    void on_pushButton_2_clicked();
+
+    void on_pushButton_clicked();
+signals:
+    void sendLoginSuccess();
+private:
+    Ui::Log_denglu *ui;
+};
+
+#endif // LOG_DENGLU_H
+
+#ifndef ME_H
+#define ME_H
+
+#include <QWidget>
+
+namespace Ui {
+class Me;
+}
+
+class Me : public QWidget
+{
+    Q_OBJECT
+
+public:
+    explicit Me(QWidget *parent = nullptr);
+    ~Me();
+
+private slots:
+    void on_pushButton_clicked();
+
+private:
+    Ui::Me *ui;
+};
+
+#endif // ME_H
+
+#ifndef WIDGET_H
+#define WIDGET_H
+
+#include <QWidget>
+#include <log_denglu.h>
+#include <first.h>
+#include <me.h>
+QT_BEGIN_NAMESPACE
+namespace Ui { class Widget; }
+QT_END_NAMESPACE
+
+class Widget : public QWidget
+{
+    Q_OBJECT
+
+public:
+    Widget(QWidget *parent = nullptr);
+    ~Widget();
+private slots:
+    void on_pushButton_clicked();
+    void on_remember_clicked();
+
+
+    void on_pushButton_3_clicked();
+
+private:
+    Ui::Widget *ui;
+    Log_denglu m_dlgLogin;
+     First fist;
+     Me me;
+};
+#endif // WIDGET_H
+
+
+//下面开始导入cpp的文件了
+#include "first.h"
+#include "ui_first.h"
+
+First::First(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::First)
+{
+    ui->setupUi(this);
+}
+
+First::~First()
+{
+    delete ui;
+}
+
+
+
+#include "log_denglu.h"
+#include "ui_log_denglu.h"
+#include "first.h"
+
+#include <QFile>
+#include <QMessageBox>
+#include <QTextStream>
+Log_denglu::Log_denglu(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::Log_denglu)
+{
+    ui->setupUi(this);
+
+
+}
+
+Log_denglu::~Log_denglu()
+{
+    delete ui;
+}
+
+void Log_denglu::on_pushButton_2_clicked()
+{
+    exit (0);
+}
+
+void Log_denglu::on_pushButton_clicked()
+{
+    if(ui->username->text()==tr("123456")&&ui->lineEdit_2->text()==tr("654321"))
+        {
+           // accept();
+        emit sendLoginSuccess(); //发送一个信号
+        }
+        else
+        {
+            QMessageBox::warning( this, tr("Warning"), tr("user name or password error!"), QMessageBox::Yes);
+        }
+}
+
+#include "widget.h"
+#include "first.h"
+#include <QApplication>
+
+int main(int argc, char *argv[])
+{
+    QApplication a(argc, argv);
+    Widget w;
+//    w.show();
+
+    return a.exec();
+}
+
+#include "me.h"
+#include "ui_me.h"
+
+Me::Me(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::Me)
+{
+    ui->setupUi(this);
+}
+
+Me::~Me()
+{
+    delete ui;
+}
+
+void Me::on_pushButton_clicked()
+{
+    exit(0); //直接进行退出
+}
+
+
+#include "widget.h"
+#include "ui_widget.h"
+#include "first.h"
+#include "log_denglu.h"
+Widget::Widget(QWidget *parent)
+    : QWidget(parent)
+    , ui(new Ui::Widget)
+{
+    ui->setupUi(this);
+    m_dlgLogin.show();
+    auto f =[&](){
+        this->show();
+    };//这个是信号发送成功了就自动发送到了主页面
+    connect(&m_dlgLogin,&Log_denglu::sendLoginSuccess,this,f);
+  //  this->close();
+
+
+
+}
+
+Widget::~Widget()
+{
+    delete ui;
+}
+
+void Widget::on_remember_clicked()
+{
+    fist.show();
+    this->hide();
+
+}
+
+void Widget::on_pushButton_3_clicked()
+{
+    me.show();
+    this->hide();
+}
+
+//那个目前的Ui分支是在flowus里的
+
+
